@@ -4,9 +4,16 @@
 			"path": "."
 		}
 	],
-	"settings": {},
+	"settings": {
+		"C_Cpp.files.exclude": {
+			"**/.vscode": true,
+			"**/.vs": true
+		}
+	},
 	"launch": {
 		"version": "0.2.0",
-		"configurations": []
+		"configurations": [
+
+		]
 	}
 }
