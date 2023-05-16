@@ -1,4 +1,6 @@
-from flask import Flask
+from flask import Flask, request
+import hashlib
+import jwt
 from flask_cors import CORS
 import sqlite3
 
@@ -9,6 +11,23 @@ CORS(app)
 def GetQuizInfo():
     return {"size": 0, "scores": []}, 200
 
+SECRET_KEY = 'votre_clé_secrète'
+HASHED_PASSWORD = b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@'  # Mot de passe hashé
+
+@app.route('/login', methods=['POST'])
+def login():
+    payload = request.get_json()
+    password = payload.get('password')
+
+    # Hasher le mot de passe à tester
+    hashed_password = hashlib.md5(password.encode('utf-8')).digest()
+
+    if hashed_password == HASHED_PASSWORD:
+        # Générer un token JWT
+        token = jwt.encode({'username': 'votre_utilisateur'}, SECRET_KEY, algorithm='HS256')
+        return {'token': token}
+
+    return 'Unauthorized', 401
 
 # Chemin vers le fichier de base de données SQLite
 DATABASE_PATH = 'path/to/your/database.db'
