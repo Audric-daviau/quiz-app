@@ -30,7 +30,16 @@ export default {
   getQuizInfo() {
     return this.call("get", "quiz-info");
   },
-  //getQuestion(position) {
-    // not implemented
-  // }
+  
+  login(password){
+    return this.call("post", "login", password)
+  },
+
+  getAllQuestions(){
+    return this.call("get", "questions/all")
+  },
+
+  getQuestionById(questionId){
+    return this.call("get", `questions/${questionId}`)
+  }
 };

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import hashlib
 import jwt
 from flask_cors import CORS
@@ -57,48 +57,97 @@ def addQuestion():
 
 @app.route('/questions', methods=['GET'])
 def getQuestionByPosition():
-    position = request.args.get('position', type = int)
-    params = (position,)
+    try:
+        position = request.args.get('position', type = int)
+        params = (position,)
+        conn = sqlite3.connect('bdd_quiz.db')
+        cursor = conn.cursor()
+        cursor.execute('select * from Question where position = ?', params)
+        result = cursor.fetchone()
+        conn.close()
+        if result is None:
+            return {"status": "error", "message": "Question not found"}, 404
+        else :
+            id, title, text, image, position, possibleAnswers = result
+            quest = {
+                'title': title,
+                'text': text,
+                'image': image,
+                'position': position,
+                'possibleAnswers': json.loads(possibleAnswers)
+            }
+            return {
+                "id": id, 
+                "title": quest['title'], 
+                "text": quest['text'], 
+                "position": quest['position'], 
+                "image": quest['image'], 
+                "possibleAnswers": quest['possibleAnswers']
+            }
+    
+    except Exception as e:
+        return {"status": "error", "message": str(e)}, 500
+
+
+@app.route('/questions/all', methods=['GET'])
+def getAllQuestions():
     conn = sqlite3.connect('bdd_quiz.db')
     cursor = conn.cursor()
-    cursor.execute('select * from Question where position = ?', params)
-    result = cursor.fetchone()
+
+    cursor.execute('SELECT * FROM Question')
+    rows = cursor.fetchall()
     conn.close()
-    if result is None:
+
+    if rows is None:
         return {"status": "error", "message": "Question not found"}, 404
-    else :
-        id, title, text, image, position, possibleAnswers = result
-        quest = {
-        'title': title,
-        'text': text,
-        'image': image,
-        'position': position,
-        'possibleAnswers': json.loads(possibleAnswers)
+
+    questions = []
+    for row in rows:
+        question = {
+            "id": row[0],
+            "title": row[1],
+            "text": row[2],
+            "image": row[3],
+            "position": row[4],
+            "possibleAnswers": json.loads(row[5])  # assuming this is stored as JSON string
         }
-        return {"id": id, "title": quest.title, "text": quest.text, "position": quest.position, "image": quest.image, "possibleAnswers": quest.possibleAnswers}
-        
+        questions.append(question)
+
+    return questions, 200
+
 
 
 @app.route('/questions/<int:questionId>', methods=['GET'])
 def getQuestionById(questionId):
-    params = (questionId,)
-    conn = sqlite3.connect('bdd_quiz.db')
-    cursor = conn.cursor()
-    cursor.execute('select * from Question where id = ?', params)
-    result = cursor.fetchone()
-    conn.close()
-    if result is None:
-        return {"status": "error", "message": "Question not found"}, 404
-    else :
-        id, title, text, image, position, possibleAnswers = result
-        quest = {
-            'title': title,
-            'text': text,
-            'image': image,
-            'position': position,
-            'possibleAnswers': json.loads(possibleAnswers)
-        }
-        return {"id": id, "title": quest.title, "text": quest.text, "position": quest.position, "image": quest.image, "possibleAnswers": quest.possibleAnswers}
+    try:
+        params = (questionId,)
+        conn = sqlite3.connect('bdd_quiz.db')
+        cursor = conn.cursor()
+        cursor.execute('select * from Question where id = ?', params)
+        result = cursor.fetchone()
+        conn.close()
+        if result is None:
+            return {"status": "error", "message": "Question not found"}, 404
+        else :
+            id, title, text, image, position, possibleAnswers = result
+            quest = {
+                'title': title,
+                'text': text,
+                'image': image,
+                'position': position,
+                'possibleAnswers': json.loads(possibleAnswers)
+            }
+            return {
+                "id": id, 
+                "title": quest['title'], 
+                "text": quest['text'], 
+                "position": quest['position'], 
+                "image": quest['image'], 
+                "possibleAnswers": quest['possibleAnswers']
+            }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}, 500
+
     
 
 

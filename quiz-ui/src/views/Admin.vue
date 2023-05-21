@@ -26,6 +26,8 @@
   </template>
   
   <script>
+  import quizApiService from "@/services/QuizApiService";
+  
   export default {
     name: "Admin",
     data() {
@@ -37,13 +39,23 @@
     methods: {
       submitForm() {
         // Implement your authentication logic here.
-        // This is a placeholder logic to demonstrate the error message.
-        if (this.password !== 'correct_password') {
-          this.errorMessage = 'Mauvais mot de passe';
-        } else {
-          this.errorMessage = '';
-          // Navigate to a different page or do something else on successful login
+        quizApiService.login({password : this.password}).then(response => {
+        if (response.status == 200) {
+          window.localStorage.setItem("token", response.data.token);
+          this.$router.push('/questionsList');
         }
+      })
+      .catch(error => {
+        // If the server returned an error, you can handle it here
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          if (error.response.status === 401) {
+            this.errorMessage = 'Mauvais mot de passe';
+          }
+        }
+      });
       },
     },
   };
