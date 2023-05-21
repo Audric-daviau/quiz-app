@@ -190,5 +190,14 @@ def deleteAllParticipations():
         return {"status": "error", "message": "Question not found"}, 404
 
 
+@app.route('/participations', methods=['POST'])
+def addParticipations():
+    #récupèrer un l'objet json envoyé dans le body de la requète
+    payload = request.get_json()
+    playerName = payload.get('playerName')
+    possibleAnswers = payload.get('answers')
+    score = 0
+    return {"playerName": playerName, "score": score, "answersSummaries" : [{"correcAnswerPosition" : 1, "wasCorrect": 1}]}
+
 if __name__ == '__main__':
     app.run()
