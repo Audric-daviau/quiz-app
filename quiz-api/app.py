@@ -9,12 +9,12 @@ import Question
 app = Flask(__name__)
 CORS(app)
 
+SECRET_KEY = 'votre_clé_secrète'
+HASHED_PASSWORD = b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@'  # Mot de passe hashé
+
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
     return {"size": 0, "scores": []}, 200
-
-SECRET_KEY = 'votre_clé_secrète'
-HASHED_PASSWORD = b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@'  # Mot de passe hashé
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -32,7 +32,7 @@ def login():
     return 'Unauthorized', 401
 
 # Chemin vers le fichier de base de données SQLite
-DATABASE_PATH = 'path/to/your/database.db'
+DATABASE_PATH = 'bdd_quiz.db'
 
 @app.route('/questions', methods=['POST'])
 def addQuestion():
@@ -188,7 +188,6 @@ def deleteAllParticipations():
         return {"status": "success", "message": "Question deleted successfully"}, 204
     else :
         return {"status": "error", "message": "Question not found"}, 404
-
 
 
 if __name__ == '__main__':
