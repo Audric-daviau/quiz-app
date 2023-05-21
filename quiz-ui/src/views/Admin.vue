@@ -27,6 +27,7 @@
   
   <script>
   export default {
+    name: "Admin",
     data() {
       return {
         password: '',
