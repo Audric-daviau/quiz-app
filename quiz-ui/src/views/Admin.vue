@@ -37,26 +37,24 @@
       };
     },
     methods: {
-      submitForm() {
-        // Implement your authentication logic here.
-        quizApiService.login({password : this.password}).then(response => {
-        if (response.status == 200) {
-          window.localStorage.setItem("token", response.data.token);
-          this.$router.push('/questionsList');
-        }
-      })
-      .catch(error => {
-        // If the server returned an error, you can handle it here
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          if (error.response.status === 401) {
-            this.errorMessage = 'Mauvais mot de passe';
-          }
-        }
-      });
-      },
+      async submitForm() {
+  try {
+    const response = await quizApiService.login({ password: this.password });
+    if (response.status === 200) {
+      window.localStorage.setItem("token", response.data.token);
+      this.$router.push('/questionsList');
+    }
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      if (error.response.status === 401) {
+        this.errorMessage = 'Mauvais mot de passe';
+      }
+    }
+  }
+},
     },
   };
   </script>

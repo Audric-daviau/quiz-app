@@ -41,5 +41,29 @@ export default {
 
   getQuestionById(questionId){
     return this.call("get", `questions/${questionId}`)
+  },
+
+  addQuestion(question){
+    const token = localStorage.getItem('token'); // assuming you have the token stored in localStorage
+    const headers = { 
+        Authorization: `Bearer ${token}` 
+    };
+    return this.call("post", "questions", question, headers)
+  },
+
+  updateQuestionById(questionId, question){
+    const token = localStorage.getItem('token'); // assuming you have the token stored in localStorage
+    const headers = { 
+        Authorization: `Bearer ${token}` 
+    };
+    return this.call("put", `questions/${questionId}`, question, headers)
+  },
+
+  deleteQuestionById(questionId){
+    const token = localStorage.getItem('token'); // assuming you have the token stored in localStorage
+    const headers = { 
+      Authorization: `Bearer ${token}` 
+    };
+    return this.call("delete", `questions/${questionId}`, null, headers)
   }
 };

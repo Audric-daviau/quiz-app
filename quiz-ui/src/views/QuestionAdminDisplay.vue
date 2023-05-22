@@ -1,5 +1,5 @@
 <template>
-    <div id="question-display">
+    <div v-if="question" id="question-display">
       <h2>{{ question.title }}</h2>
       <p>{{ question.text }}</p>
       
@@ -40,8 +40,8 @@
       },
       async deleteQuestion() {
         try {
-          await quizApiService.deleteQuestion(this.$route.params.questionId);
-          this.$router.push({ name: 'questionList' });
+          await quizApiService.deleteQuestionById(this.$route.params.questionId);
+          this.$router.push('/questionsList');
         } catch (error) {
           console.error(error);
         }

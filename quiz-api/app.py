@@ -50,8 +50,6 @@ def addQuestion():
     json_string = json.dumps(payload)
     quest = Question.from_json(json_string)
     Question.generate_insert_sql(quest)
-    print(quest.title)
-    print(Question.to_json(quest))
     if payload:
         return {'id': 1}
 

@@ -35,7 +35,7 @@ const router = createRouter({
       component: QuestionsList,
     },
     {
-      path: "/questionEdition/:questionId",
+      path: "/questionEdition/:questionId?",
       name: "QuestionEdition",
       component: QuestionEdition,
     },

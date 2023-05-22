@@ -20,30 +20,35 @@
 
       <div class="form-group">
         <label for="image">Image</label>
-        <input id="image" @change="onFileChange" type="file" accept="image/*" />
+        <ImageUpload @file-change="imageFileChangedHandler" />
         <img v-if="question.image" :src="question.image" />
+        
       </div>
 
-      <div class="form-group" v-for="(answer, index) in question.answers" :key="index">
+      <div class="form-group" v-for="(answer, index) in question.possibleAnswers" :key="index">
         <label :for="'answer' + index">Intitulé de la réponse</label>
-        <input :id="'answer' + index" v-model="answer.text" type="text" required />
+        <input :id="'answer' + index" v-model="answer.text" type="text"/>
 
         <input type="checkbox" v-model="answer.isCorrect" />
         <label :for="'answer' + index">Réponse correcte</label>
       </div>
 
       <div class="form-group">
-        <button type="submit">Sauvegarder</button>
-        <button @click.prevent="cancel">Annuler</button>
+        <button @click.prevent="saveQuestion">Sauvegarder</button>
+        <button @click="cancel">Annuler</button>
       </div>
     </form>
   </div>
 </template>
 <script>
 import quizApiService from "@/services/QuizApiService";
+import ImageUpload from './ImageUpload.vue';
 
 export default {
     name: "QuestionEdition",
+    components: {
+      ImageUpload
+    },
     data() {
       return {
         question: {
@@ -51,7 +56,7 @@ export default {
           title: '',
           text: '',
           image: '',
-          answers: [
+          possibleAnswers: [
             { text: '', isCorrect: false },
             { text: '', isCorrect: false },
             { text: '', isCorrect: false },
@@ -63,26 +68,65 @@ export default {
     methods: {
       async fetchQuestion() {
         const questionId = this.$route.params.questionId;
-        try {
-          const response = await quizApiService.getQuestionById(questionId);
-          this.question = response.data;
-        } catch (error) {
-          console.error(error);
-        }
+        if (questionId) {  // Check if the questionId exists
+      try {
+        const response = await quizApiService.getQuestionById(questionId);
+        this.question = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      // If there's no questionId, the user is creating a new question.
+      // So, set a default or empty question.
+      this.question = {
+        position: '',
+        title: '',
+        text: '',
+        image: '',
+        possibleAnswers: [
+          { text: '', isCorrect: false },
+          { text: '', isCorrect: false },
+          { text: '', isCorrect: false },
+          { text: '', isCorrect: false },
+        ],
+      };
+    }
       },
+      
+      async saveQuestion() {
+        
+        const questionId = this.$route.params.questionId;
+          const token = localStorage.getItem('token');
+          if(questionId) {
+            try {
+              const response = await quizApiService.updateQuestionById(questionId, this.question);
+              console.log(response);
+              this.$router.push('/questionsList');
+            } catch (error) {
+              console.error(error);
+            }
+          } else {
+            try {
+              const response = await quizApiService.addQuestion(this.question);
+              console.log(response);
+              this.$router.push('/questionsList');
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        },
+    cancel() {
+      this.$router.push('/questionsList');
+    },
+    imageFileChangedHandler(b64String) {
+      console.log(b64String);
+      this.question.image = b64String;
+    }
     },
     createImage(file) {
       // Implement your image handling logic here
       // For example, you can use FileReader API to read the image file
       // and convert it to a data URL
-    },
-    saveQuestion() {
-      // Implement your saving logic here
-      // Make sure to validate that only one answer is marked as correct
-      this.$router.push('/questionsList');
-    },
-    cancel() {
-      this.$router.push('/questionsList');
     },
     mounted() {
       this.fetchQuestion();
