@@ -29,7 +29,7 @@ def login():
         token = jwt.encode({'username': 'votre_utilisateur'}, SECRET_KEY, algorithm='HS256')
         return {'token': token}
 
-    return 'Unauthorized', 401
+    return 'unauthorized', 401
 
 # Chemin vers le fichier de base de données SQLite
 DATABASE_PATH = 'bdd_quiz.db'
