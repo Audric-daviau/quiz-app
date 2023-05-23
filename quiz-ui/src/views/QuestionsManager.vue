@@ -19,19 +19,24 @@ export default {
         return {
             currentQuestionPosition: 1,
             totalNumberOfQuestions: 0,
-            currentQuestion: null,
+            currentQuestion: {},
             quizFinished: false
         };
     },
 
     methods: {
         async loadQuestionByPosition(position) {
+            console.log("ici")
             const response = await QuizApiService.getQuestionByPosition(position);
             // console.log("response")
             console.log(response)
             if (response.status === 200) {
                 this.currentQuestion = response.data;
+<<<<<<< HEAD
                 this.totalNumberOfQuestions = response.data.totalNumberOfQuestions;
+=======
+                this.totalNumberOfQuestions = response.data;
+>>>>>>> 891c087c57294ee76d970bc1ed6b5c93c46aae94
             }
         },
         handleQuestionAnswered(option) {
@@ -52,6 +57,7 @@ export default {
         },
     },
     created() {
+        console.log("ici")
         this.loadQuestionByPosition(this.currentQuestionPosition);
     },
     computed: {

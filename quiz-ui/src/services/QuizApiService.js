@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 
 export default {
-  async call(method, resource, data = null, token = null) {
+  async call(method, resource, data = null, token = null, params) {
     var headers = {
       "Content-Type": "application/json",
     };
@@ -19,6 +19,7 @@ export default {
       headers: headers,
       url: resource,
       data,
+      params
     })
       .then((response) => {
         return { status: response.status, data: response.data };
@@ -45,7 +46,7 @@ export default {
 
   getQuestionByPosition(position){
     console.log("getPositon")
-    return this.call("get", `questions`,position)
+    return this.call("get", `questions`, null, null, {position});
   },
 
   addQuestion(question){
