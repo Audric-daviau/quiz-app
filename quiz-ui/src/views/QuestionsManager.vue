@@ -23,19 +23,20 @@ export default {
         return {
             currentQuestionPosition: 1,
             totalNumberOfQuestions: 0,
-            currentQuestion: 1,
+            currentQuestion: {},
             quizFinished: false
         };
     },
 
     methods: {
         async loadQuestionByPosition(position) {
+            console.log("ici")
             const response = await QuizApiService.getQuestionByPosition(position);
             // console.log("response")
             console.log(response)
             if (response.status === 200) {
-                this.currentQuestion = response.data.question;
-                this.totalNumberOfQuestions = response.data.totalNumberOfQuestions;
+                this.currentQuestion = response.data;
+                this.totalNumberOfQuestions = response.data;
             }
         },
         handleQuestionAnswered(option) {
@@ -56,6 +57,7 @@ export default {
         },
     },
     created() {
+        console.log("ici")
         this.loadQuestionByPosition(this.currentQuestionPosition);
     },
     computed: {
