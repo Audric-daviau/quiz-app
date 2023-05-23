@@ -278,6 +278,21 @@ def addParticipants():
         cursor.close()
         conn.close()
         return {"status": "error", "message": str(e)}, 500
+    
+
+@app.route('/participations', methods=['GET'])
+def getScoreParticipant():
+    position = request.args.get('playerName', type = int)
+    params = (position,)
+    conn = sqlite3.connect('bdd_quiz.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT score FROM Participant where pseudo = ?', params)
+    score = cursor.fetchone()
+    conn.close()
+    if score is None:
+        return {"status": "error", "message": "Question not found"}, 404
+    else :
+        return {"score" : score}
 
 
 if __name__ == '__main__':
