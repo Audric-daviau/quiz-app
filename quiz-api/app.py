@@ -13,7 +13,7 @@ SECRET_KEY = 'votre_clé_secrète'
 HASHED_PASSWORD = b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@'  # Mot de passe hashé
 
 @app.route('/quiz-info', methods=['GET'])
-def GetQuizInfo():
+def getQuizInfo():
     try:
         conn = sqlite3.connect('bdd_quiz.db')
         cursor = conn.cursor()
