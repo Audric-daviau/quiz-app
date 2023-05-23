@@ -32,11 +32,7 @@ export default {
             console.log(response)
             if (response.status === 200) {
                 this.currentQuestion = response.data;
-<<<<<<< HEAD
-                this.totalNumberOfQuestions = response.data.totalNumberOfQuestions;
-=======
-                this.totalNumberOfQuestions = response.data;
->>>>>>> 891c087c57294ee76d970bc1ed6b5c93c46aae94
+                this.totalNumberOfQuestions = 10;
             }
         },
         handleQuestionAnswered(option) {

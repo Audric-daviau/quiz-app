@@ -1,10 +1,10 @@
 <template>
     <div v-if="question && question.title && question.description">
       <h2>{{ question.title }}</h2>
-      <p>{{ question.description }}</p>
+      <p>{{ question.text }}</p>
       <img v-if="question.image" :src="question.image" />
-      <ul v-if="question.options">
-        <li v-for="option in question.options" :key="option.id" @click="selectOption(option)">
+      <ul v-if="question.possibleAnswers">
+        <li v-for="option in question.possibleAnswers" :key="option.id" @click="selectOption(option)">
           {{ option.text }}
         </li>
       </ul>
