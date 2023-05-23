@@ -45,7 +45,7 @@ export default {
 
   getQuestionByPosition(position){
     console.log("getPositon")
-    return this.call("get", `questions/${position}`)
+    return this.call("get", `questions`,position)
   },
 
   addQuestion(question){

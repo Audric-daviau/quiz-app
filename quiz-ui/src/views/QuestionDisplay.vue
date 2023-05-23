@@ -18,7 +18,6 @@
     props: {
       question: {
         type: Object,
-        required: true
       }
     },
     emits: ['answer-selected'], // Déclaration de l'événement émis
