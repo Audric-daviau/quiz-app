@@ -1,13 +1,13 @@
 <template>
-
   <h1>LE ROI DU QUIZ CE SERA MOI !</h1>
 
-  <div v-for="scoreEntry in registeredScores.data.scores" v-bind:key="scoreEntry.date">
-    {{ scoreEntry.playerName }} - {{ scoreEntry.score }}
+  <div v-if="registeredScores.data && registeredScores.data.scores">
+    <div v-for="scoreEntry in registeredScores.data.scores" v-bind:key="scoreEntry.date">
+      {{ scoreEntry.playerName }} - {{ scoreEntry.score }}
+    </div>
   </div>
 
   <router-link to="/new-quiz">Go !</router-link>
-
 </template>
 
 <script>
@@ -17,7 +17,11 @@ export default {
   name: "HomePage",
   data() {
     return {
-      registeredScores: [], // Variable tableau des scores
+      registeredScores: {
+        data: {
+          scores: null,
+        },
+      },
     };
   },
   async created() {
