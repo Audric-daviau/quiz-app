@@ -5,6 +5,7 @@ from flask_cors import CORS
 import sqlite3
 import json
 import Question
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -19,10 +20,16 @@ def getQuizInfo():
         cursor = conn.cursor()
         cursor.execute('SELECT COUNT(*) FROM Question')
         result = cursor.fetchone()
+        cursor.execute("select pseudo, score from Participant")
+        rows = cursor.fetchall()
+        scores = []
+        for row in rows:
+            score_dict = {"playerName": row[0], "score": row[1]}
+            scores.append(score_dict)
         conn.close()
-
+        scores = sorted(scores, key=lambda x: x['score'], reverse=True)
         if result is not None:
-            return {"size": result[0], "scores": 0}, 200
+            return {"size": result[0], "scores": scores}, 200
         else:
             return {"status": "error", "message": "Cannot get the questions count"}, 500
 
@@ -230,35 +237,48 @@ def deleteAllQuestions():
     else :
         return {"status": "error", "message": "Question not found"}, 404
 
-@app.route('/participations/all', methods=['DELETE'])
-def deleteAllParticipations():
-    token = request.headers.get('Authorization')
-    if token is None:
-        return 'Unauthorized', 401
-    # Delete the question from the database
-    conn = sqlite3.connect('bdd_quiz.db')
-    cursor = conn.cursor()
-    
-    query = '''DELETE FROM Participant'''
-    cursor.execute(query)
-    affected_rows = cursor.rowcount
-    conn.commit()
-    conn.close()
-
-    if affected_rows != 0:
-        return {"status": "success", "message": "Question deleted successfully"}, 204
-    else :
-        return {"status": "error", "message": "Question not found"}, 404
-
 
 @app.route('/participations', methods=['POST'])
-def addParticipations():
-    #récupèrer un l'objet json envoyé dans le body de la requète
+def addParticipants():
     payload = request.get_json()
     playerName = payload.get('playerName')
-    possibleAnswers = payload.get('answers')
-    score = 0
-    return {"playerName": playerName, "score": score, "answersSummaries" : [{"correcAnswerPosition" : 1, "wasCorrect": 1}]}
+    answers = payload.get('answers')
+    conn = sqlite3.connect('bdd_quiz.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*) FROM Question')
+    result = cursor.fetchone()
+    if len(answers) != result[0] :
+        return {"status": "error", "message": "not enough or too much"}, 400
+    
+    cursor.execute('select possibleAnswers from Question')
+    try:
+        rows = cursor.fetchall()
+        i = 0
+        score = 0
+        for row in rows:
+            possible_answers = json.loads(row[0])  # Convert the JSON string to a Python list
+            if possible_answers[answers[i]-1]["isCorrect"] is True:
+                score += 1
+            i += 1
+            
+        answers_str = json.dumps(answers)
+        sql = """
+        INSERT INTO Participant (pseudo, answers, score, date)
+        VALUES (?, ?, ?, ?)
+        """
+        # Créer un tuple contenant les valeurs à insérer
+        now = datetime.now()
+        date_time_string = now.strftime("%Y-%m-%d %H:%M:%S")
+        values = (playerName, answers_str, score, date_time_string)
+        cursor.execute(sql, values)
+        cursor.execute("commit")
+        conn.close()
+        return {"playerName": playerName, "score": score}, 200
+    except Exception as e:
+        cursor.close()
+        conn.close()
+        return {"status": "error", "message": str(e)}, 500
+
 
 if __name__ == '__main__':
     app.run()
