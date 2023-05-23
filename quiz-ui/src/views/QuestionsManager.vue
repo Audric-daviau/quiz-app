@@ -1,12 +1,8 @@
 <template>
-    <div>
-        <!--
-            <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
-        -->
+    <div v-if="currentQuestion">
+        <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
         <QuestionDisplay :question="currentQuestion" @question-answered="handleQuestionAnswered" />
-        <!--
-            <button v-if="isLastQuestion" @click="endQuiz">End Quiz</button>
-        -->
+        <button v-if="isLastQuestion" @click="endQuiz">End Quiz</button>
     </div>
 </template>
   
@@ -36,7 +32,11 @@ export default {
             console.log(response)
             if (response.status === 200) {
                 this.currentQuestion = response.data;
+<<<<<<< HEAD
+                this.totalNumberOfQuestions = response.data.totalNumberOfQuestions;
+=======
                 this.totalNumberOfQuestions = response.data;
+>>>>>>> 891c087c57294ee76d970bc1ed6b5c93c46aae94
             }
         },
         handleQuestionAnswered(option) {
