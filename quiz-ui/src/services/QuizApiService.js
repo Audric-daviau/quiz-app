@@ -43,6 +43,11 @@ export default {
     return this.call("get", `questions/${questionId}`)
   },
 
+  getQuestionByPosition(position){
+    console.log("getPositon")
+    return this.call("get", `questions/${position}`)
+  },
+
   addQuestion(question){
     const token = localStorage.getItem('token'); // assuming you have the token stored in localStorage
     const headers = { 

@@ -6,6 +6,8 @@ import QuestionsList from '../views/QuestionsList.vue'
 import QuestionAdminDisplay from '../views/QuestionAdminDisplay.vue'
 import QuestionEdition from '../views/QuestionEdition.vue'
 import NewQuizPage from '../views/NewQuizPage.vue';
+import QuestionDisplay from '../views/QuestionDisplay.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +31,11 @@ const router = createRouter({
       path: '/new-quiz',
       name: 'NewQuizPage',
       component: NewQuizPage
+    },    
+    {
+      path: '/questions',
+      name: 'QuestionDisplay',
+      component: QuestionDisplay
     },    
     {
       path: "/questionAdminDisplay/:questionId",
