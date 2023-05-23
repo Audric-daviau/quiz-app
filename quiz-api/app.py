@@ -14,7 +14,21 @@ HASHED_PASSWORD = b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@'  # Mot de
 
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
-    return {"size": 0, "scores": []}, 200
+    try:
+        conn = sqlite3.connect('bdd_quiz.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT COUNT(*) FROM Question')
+        result = cursor.fetchone()
+        conn.close()
+
+        if result is not None:
+            return {"size": result[0], "scores": 0}, 200
+        else:
+            return {"status": "error", "message": "Cannot get the questions count"}, 500
+
+    except Exception as e:
+        return {"status": "error", "message": str(e)}, 500
+    
 
 @app.route('/login', methods=['POST'])
 def login():
