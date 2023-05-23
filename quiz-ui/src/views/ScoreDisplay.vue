@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h2>Votre score</h2>
         <p>Score : {{ score }}</p>
         <p>Classement : {{ ranking }}</p>
         <p>Meilleurs scores :</p>
