@@ -1,19 +1,23 @@
 <template>
-    <div>
-        <h2>{{ question.title }}</h2>
-        <p>{{ question.description }}</p>
-        <img v-if="question.image" :src="question.image" />
-        <ul>
-            <li v-for="option in question.options" :key="option.id" @click="selectOption(option)">
-                {{ option.text }}
-            </li>
-        </ul>
-        <a @click="selectOption(2)">La réponse D</a>
+    <div v-if="question && question.title">
+      <h2>{{ question.title }}</h2>
+      <p>{{ question.text }}</p>
+      <img v-if="question.image" :src="question.image" />
+      <ul v-if="question.possibleAnswers">
+        <li v-for="option in question.possibleAnswers" :key="option.id" @click="$emit('answer-selected', option.id)">
+          {{ option.text }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      Loading question...
     </div>
 </template>
   
+
+  
 <script>
-export default {
+  export default {
     name: 'QuestionDisplay',
     props: {
         question: {
