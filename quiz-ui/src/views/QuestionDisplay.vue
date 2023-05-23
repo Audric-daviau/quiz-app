@@ -4,7 +4,7 @@
       <p>{{ question.text }}</p>
       <img v-if="question.image" :src="question.image" />
       <ul v-if="question.possibleAnswers">
-        <li v-for="option in question.possibleAnswers" :key="option.id" @click="$emit('answer-selected', option.id)">
+        <li v-for="(option, optionIndex) in question.possibleAnswers" :key="option.id" @click="$emit('answer-selected', optionIndex)">
           {{ option.text }}
         </li>
       </ul>

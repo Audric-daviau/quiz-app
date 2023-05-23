@@ -13,5 +13,13 @@ export default {
   },
   getParticipationScore() {
     return window.sessionStorage.getItem("participationScore");
-  }
+  },
+  saveParticipationAnswers(answers) {
+    window.sessionStorage.setItem("selectedAnswers", JSON.stringify(answers));
+  },
+
+  getParticipationAnswers() {
+    const answersString = window.sessionStorage.getItem("selectedAnswers");
+    return JSON.parse(answersString);
+  },
 };

@@ -37,10 +37,14 @@ export default {
                 this.totalNumberOfQuestions = resp.data.size;
             }
         },
-        handleQuestionAnswered(option) {
+        handleQuestionAnswered(optionIndex) {
             // Handle question answered event
-            console.log('Selected option:', option);
-            this.selectedAnswers.push(option); // Ajout de la réponse au tableau selectedAnswers
+            optionIndex++;
+            console.log('Selected optionIndex:', optionIndex);
+            this.selectedAnswers.push(optionIndex); // Ajout de la réponse au tableau selectedAnswers
+
+            // Enregistrement du tableau dans la session
+            ParticipationStorageService.saveParticipationAnswers(this.selectedAnswers);
 
             // Move to next question
             this.currentQuestionPosition++;
@@ -54,6 +58,7 @@ export default {
         endQuiz() {
             // Handle quiz end
             this.quizFinished = true;
+            this.$router.push({ name: 'your-score' });
             const playerName = ParticipationStorageService.getUsername();
             const answers = this.selectedAnswers;
 
@@ -68,9 +73,7 @@ export default {
                     // Gestion de l'erreur
                     console.error('Error saving participation:', error);
                 });
-            this.$router.push({ name: 'your-score' });
         },
-
     },
     created() {
         this.loadQuestionByPosition(this.currentQuestionPosition);
