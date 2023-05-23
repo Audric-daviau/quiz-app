@@ -49,8 +49,8 @@ export default {
         },
         endQuiz() {
             // Handle quiz end
-            console.log('Quiz ended');
             this.quizFinished = true;
+            this.$router.push({ name: 'your-score' });
         },
     },
     created() {

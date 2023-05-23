@@ -26,6 +26,7 @@ export default {
     launchNewQuiz() {
       ParticipationStorageService.saveUsername(this.username);
       console.log("Launch new quiz with", this.username);
+      this.$router.push('/questions'); // Redirection vers la page des questions
     },
   }
 };

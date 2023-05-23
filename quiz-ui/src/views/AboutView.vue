@@ -12,4 +12,3 @@ export default {
 <style>
 /* Vos styles CSS ici */
 </style>
-  
