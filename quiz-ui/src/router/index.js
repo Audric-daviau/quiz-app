@@ -6,7 +6,7 @@ import QuestionsList from '../views/QuestionsList.vue'
 import QuestionAdminDisplay from '../views/QuestionAdminDisplay.vue'
 import QuestionEdition from '../views/QuestionEdition.vue'
 import NewQuizPage from '../views/NewQuizPage.vue';
-import QuestionDisplay from '../views/QuestionDisplay.vue';
+import QuestionsManager from '../views/QuestionsManager.vue';
 
 
 const router = createRouter({
@@ -34,9 +34,9 @@ const router = createRouter({
     },    
     {
       path: '/questions',
-      name: 'QuestionDisplay',
-      component: QuestionDisplay
-    },    
+      name: 'Questions',
+      component: QuestionsManager
+    },   
     {
       path: "/questionAdminDisplay/:questionId",
       name: "QuestionAdminDisplay",
