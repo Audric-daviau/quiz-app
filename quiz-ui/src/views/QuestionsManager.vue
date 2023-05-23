@@ -27,11 +27,12 @@ export default {
     methods: {
         async loadQuestionByPosition(position) {
             const response = await QuizApiService.getQuestionByPosition(position);
+            const resp = await QuizApiService.getQuizInfo()
             // console.log("response")
             console.log(response)
             if (response.status === 200) {
                 this.currentQuestion = response.data;
-                this.totalNumberOfQuestions = 10;
+                this.totalNumberOfQuestions = resp.data.size;
             }
         },
         handleQuestionAnswered(option) {
