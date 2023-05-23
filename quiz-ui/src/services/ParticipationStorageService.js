@@ -1,17 +1,17 @@
 export default {
   clear() {
-    window.localStorage.clear();
+    window.sessionStorage.clear();
   },
   saveUsername(username) {
-    window.localStorage.setItem("username", username);
+    window.sessionStorage.setItem("username", username);
   },
   getUsername() {
-    return window.localStorage.getItem("username");
+    return window.sessionStorage.getItem("username");
   },
   saveParticipationScore(participationScore) {
-    window.localStorage.setItem("participationScore", participationScore);
+    window.sessionStorage.setItem("participationScore", participationScore);
   },
   getParticipationScore() {
-    return window.localStorage.getItem("participationScore");
+    return window.sessionStorage.getItem("participationScore");
   }
 };
