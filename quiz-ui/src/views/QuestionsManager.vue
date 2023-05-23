@@ -1,7 +1,7 @@
 <template>
     <div v-if="currentQuestion">
         <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
-        <QuestionDisplay :question="currentQuestion" @question-answered="handleQuestionAnswered" />
+        <QuestionDisplay :question="currentQuestion" @answer-selected="handleQuestionAnswered" />
         <button v-if="isLastQuestion" @click="endQuiz">End Quiz</button>
     </div>
 </template>
@@ -26,7 +26,6 @@ export default {
 
     methods: {
         async loadQuestionByPosition(position) {
-            console.log("ici")
             const response = await QuizApiService.getQuestionByPosition(position);
             // console.log("response")
             console.log(response)
@@ -38,6 +37,7 @@ export default {
         handleQuestionAnswered(option) {
             // Handle question answered event
             console.log('Selected option:', option);
+            this.$emit('answer-selected', 2);
             // Move to next question
             this.currentQuestionPosition++;
             if (this.currentQuestionPosition <= this.totalNumberOfQuestions) {
@@ -53,7 +53,6 @@ export default {
         },
     },
     created() {
-        console.log("ici")
         this.loadQuestionByPosition(this.currentQuestionPosition);
     },
     computed: {

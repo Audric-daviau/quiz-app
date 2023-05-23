@@ -4,11 +4,10 @@
       <p>{{ question.text }}</p>
       <img v-if="question.image" :src="question.image" />
       <ul v-if="question.possibleAnswers">
-        <li v-for="option in question.possibleAnswers" :key="option.id" @click="selectOption(option)">
+        <li v-for="option in question.possibleAnswers" :key="option.id" @click="$emit('answer-selected', option.id)">
           {{ option.text }}
         </li>
       </ul>
-      <a @click="selectOption(2)">La réponse D</a>
     </div>
     <div v-else>
       Loading question...
@@ -21,20 +20,20 @@
   export default {
     name: 'QuestionDisplay',
     props: {
-      question: {
-        type: Object,
-      }
+        question: {
+            type: Object,
+        }
     },
     emits: ['answer-selected'], // Déclaration de l'événement émis
     methods: {
-      selectOption(option) {
-        this.$emit('answer-selected', option);
-      }
+        selectOption(option) {
+            this.$emit('answer-selected', option);
+        }
     }
-  };
-  </script>
+};
+</script>
   
-  <style scoped>
-  /* Styles spécifiques au composant QuestionDisplay */
-  </style>
+<style scoped>
+/* Styles spécifiques au composant QuestionDisplay */
+</style>
   

@@ -45,7 +45,6 @@ export default {
   },
 
   getQuestionByPosition(position){
-    console.log("getPositon")
     return this.call("get", `questions`, null, null, {position});
   },
 
