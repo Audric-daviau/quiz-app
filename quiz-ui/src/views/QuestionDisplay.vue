@@ -1,5 +1,5 @@
 <template>
-    <div v-if="question && question.title && question.description">
+    <div v-if="question && question.title">
       <h2>{{ question.title }}</h2>
       <p>{{ question.text }}</p>
       <img v-if="question.image" :src="question.image" />
