@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <router-link to="/new-quiz">Go!</router-link>
+    <router-link class="go-button" to="/new-quiz">Gomu Gomu GO!</router-link>
   </div>
 </template>
 
@@ -72,7 +72,7 @@ router-link {
 
 .title-content {
   margin-top: 5%;
-  margin-right: 45%;
+  margin-right: 5%;
 }
 
 .content {
@@ -132,6 +132,27 @@ router-link {
   font-size: 24px;
   color: #460808;
   font-weight: 600;
+}
+
+.go-button {
+  margin-top: 10%;
+  margin-right: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 80px;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #ff5722;
+  color: #ffffff;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.go-button:hover {
+  background-color: #ff784d;
 }
 
 @media (max-width: 600px) {
