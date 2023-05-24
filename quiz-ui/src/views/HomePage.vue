@@ -48,10 +48,6 @@ h1 {
   margin-top: 2rem;
 }
 
-div {
-  margin: 2rem 0;
-}
-
 router-link {
   display: block;
   text-align: center;

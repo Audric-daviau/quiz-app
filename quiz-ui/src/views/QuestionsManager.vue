@@ -2,7 +2,6 @@
     <div v-if="currentQuestion">
         <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
         <QuestionDisplay :question="currentQuestion" @answer-selected="handleQuestionAnswered" />
-        <button v-if="isLastQuestion" @click="endQuiz">End Quiz</button>
     </div>
 </template>
   
@@ -22,7 +21,11 @@ export default {
             totalNumberOfQuestions: 0,
             currentQuestion: {},
             quizFinished: false,
-            selectedAnswers: []
+            selectedAnswers: [],
+            participants: {
+                playerName: '',
+                answers: ''
+            },
         };
     },
 
@@ -59,11 +62,10 @@ export default {
             // Handle quiz end
             this.quizFinished = true;
             this.$router.push({ name: 'your-score' });
-            const playerName = ParticipationStorageService.getUsername();
-            const answers = this.selectedAnswers;
-
+            this.participants.playerName = ParticipationStorageService.getUsername();
+            this.participants.answers = this.selectedAnswers;
             // Appel au service pour envoyer les informations au serveur
-            QuizApiService.saveParticipation(playerName, answers)
+            QuizApiService.addParticipants(this.participants)
                 .then(response => {
                     // Réponse du serveur
                     console.log('Participation saved:', response.data);

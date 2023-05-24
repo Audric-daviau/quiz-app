@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class = "page">
     <h1>Quiz</h1>
     <form @submit.prevent="submitForm">
       <div class="mb-3">
@@ -33,7 +33,11 @@ export default {
 </script>
   
 <style scoped>
-.container {
-  margin-top: 2rem;
+.page { 
+  background: url("../assets/NewQuizPage.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 </style>

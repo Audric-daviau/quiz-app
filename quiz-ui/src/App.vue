@@ -28,7 +28,6 @@ header {
   left: 0;
   width: 100%;
   line-height: 1.5;
-  background-color: #b14249;
   padding: 1rem;
   z-index: 1;
 }
@@ -85,19 +84,5 @@ nav a.router-link-exact-active {
     margin-top: 1rem;
   }
 
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center; /* Added */
-    justify-content: center; /* Added */
-  }
-
-  main.app-main {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 </style>

@@ -82,5 +82,9 @@ export default {
 
   getParticipantClass(playerName){
     return this.call("get",  "participations/classement", null, null, {playerName})
+  },
+
+  addParticipants(participant){
+    return this.call("post", "/participations", participant)
   }
 };
