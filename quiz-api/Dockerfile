@@ -23,7 +23,7 @@ ENV FLASK_APP=app.py
 COPY . .
 
 # Informations sur l'image
-LABEL maintainer="TRAN Michael <tran.michael@edu.esiee.fr>" \
+LABEL maintainer="DAVIAU Audric <audric.daviau--leymet@edu.esiee.fr>" \
     version="1.0"
 
 # Commande de démarrage du serveur gunicorn
