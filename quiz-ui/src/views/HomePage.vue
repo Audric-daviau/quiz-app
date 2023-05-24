@@ -1,21 +1,21 @@
 <template>
   <div class="home-page">
-    <div class="content">
+    <div class="title-content">
       <h1>LE ROI DU QUIZ CE SERA MOI !</h1>
-
-      <div v-if="registeredScores.data && registeredScores.data.scores" class="score-chart">
-        <div v-for="(scoreEntry, index) in registeredScores.data.scores" :key="scoreEntry.date" class="score-entry">
-          <div class="player-rank">{{'# RANK ' + (index + 1 )}}</div>
-          <div class="player-name">{{ scoreEntry.playerName }}</div>
-          <div class="score">
-            {{ scoreEntry.score > 1 ? scoreEntry.score + ' pts' : scoreEntry.score + ' pt' }}
+      <div class="content" v-if="registeredScores.data && registeredScores.data.scores">
+        <div class="score-chart">
+          <div class="score-container">
+            <div v-for="(scoreEntry, index) in registeredScores.data.scores" :key="scoreEntry.date" class="score-entry">
+              <div class="player-rank">{{ '# RANK ' + (index + 1) }}</div>
+              <div class="player-name">{{ scoreEntry.playerName }}</div>
+              <div class="score">{{ scoreEntry.score > 1 ? scoreEntry.score + ' pts' : scoreEntry.score + ' pt' }}</div>
+              <div class="score-date">{{ scoreEntry.date }}</div>
+            </div>
           </div>
-          <div class="score-date">{{ scoreEntry.date }}</div>
         </div>
       </div>
-
-      <router-link to="/new-quiz">Go!</router-link>
     </div>
+    <router-link to="/new-quiz">Go!</router-link>
   </div>
 </template>
 
@@ -34,14 +34,14 @@ export default {
     };
   },
   async created() {
-    console.log("Composant Home page 'created'");
+    console.log("Component Home page 'created'");
     try {
-      // Appel au service pour récupérer les scores
+      // Call the service to retrieve the scores
       const scores = await quizApiService.getQuizInfo();
-      this.registeredScores = scores; // Stockage des scores dans registeredScores
-      console.log(this.registeredScores)
+      this.registeredScores = scores; // Store the scores in registeredScores
+      console.log(this.registeredScores);
     } catch (error) {
-      console.error("Erreur lors de la récupération des scores:", error);
+      console.error("Error retrieving scores:", error);
     }
   },
 };
@@ -50,7 +50,8 @@ export default {
 <style scoped>
 h1 {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 8%; /* Adjust the margin-top value as needed */
+  font-size: 3rem;
 }
 
 router-link {
@@ -69,6 +70,11 @@ router-link {
   justify-content: center;
 }
 
+.title-content {
+  margin-top: 5%;
+  margin-right: 45%;
+}
+
 .content {
   text-align: center;
   padding: 2rem;
@@ -76,7 +82,12 @@ router-link {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  margin-right: 45%;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.score-container {
+  max-height: 600px; /* Adjust the max height as needed */
 }
 
 .score-chart {
@@ -111,7 +122,7 @@ router-link {
 }
 
 .score {
-  color: #e30c0c;
+  color: #f1c72e;
   padding: 6px;
   font-size: 25px;
 }
@@ -119,7 +130,7 @@ router-link {
 .score-date {
   padding: 8px;
   font-size: 24px;
-  color: #1a5ccf;
+  color: #460808;
   font-weight: 600;
 }
 

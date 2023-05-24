@@ -51,13 +51,18 @@ nav .nav-link {
   display: inline-block;
   padding: 0.5rem 1rem;
   color: white; /* Set the text color to white */
-  background-color: #b14249; /* Set the desired background color */
+  background-color: transparent; /* Set the desired background color */
   text-decoration: none;
   transition: background-color 0.3s ease;
+  font-size: 2rem;
+}
+
+nav .nav-link:hover {
+  text-decoration: underline;
 }
 
 nav a.router-link-exact-active {
-  background-color: #8d353a;
+  text-decoration: underline;
 }
 
 @media (min-width: 1024px) {
