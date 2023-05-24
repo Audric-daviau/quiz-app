@@ -1,13 +1,14 @@
 <template>
   <div class = "page">
-    <h1>Quiz</h1>
     <form @submit.prevent="submitForm">
+      
+    <h1>Quiz</h1>
       <div class="mb-3">
         <label for="username" class="form-label">Saisissez votre nom :</label>
         <input type="text" class="form-control" id="username" v-model="username">
         <p>{{ username }}</p>
       </div>
-      <button class="btn btn-outline-danger mt-2" @click="launchNewQuiz">Go</button>
+      <button class="btn btn-primary mt-2" @click="launchNewQuiz">Go</button>
     </form>
   </div>
 </template>
@@ -32,12 +33,24 @@ export default {
 };
 </script>
   
-<style scoped>
+<style scodped>
+body {
+    color: white;
+    font-size: 2em;
+    text-align: left;
+}
+form {
+    display: inline-block;
+}
+
 .page { 
   background: url("../assets/NewQuizPage.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
