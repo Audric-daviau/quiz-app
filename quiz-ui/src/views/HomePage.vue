@@ -1,13 +1,17 @@
 <template>
-  <h1>LE ROI DU QUIZ CE SERA MOI !</h1>
+  <div class="home-page">
+    <div class="content">
+      <h1>LE ROI DU QUIZ CE SERA MOI !</h1>
 
-  <div v-if="registeredScores.data && registeredScores.data.scores">
-    <div v-for="scoreEntry in registeredScores.data.scores" v-bind:key="scoreEntry.date">
-      {{ scoreEntry.playerName }} - {{ scoreEntry.score }}
+      <div v-if="registeredScores.data && registeredScores.data.scores">
+        <div v-for="scoreEntry in registeredScores.data.scores" :key="scoreEntry.date">
+          {{ scoreEntry.playerName }} - {{ scoreEntry.score }}
+        </div>
+      </div>
+
+      <router-link to="/new-quiz">Go!</router-link>
     </div>
   </div>
-
-  <router-link to="/new-quiz">Go !</router-link>
 </template>
 
 <script>
@@ -40,16 +44,36 @@ export default {
 
 <style scoped>
 h1 {
-  text-align: center; /* Added */
-  margin-top: 2rem; /* Added */
+  text-align: center;
+  margin-top: 2rem;
 }
 
 div {
-  margin: 2rem 0; /* Added */
+  margin: 2rem 0;
 }
 
 router-link {
   display: block;
-  text-align: center; /* Added */
+  text-align: center;
+}
+
+.home-page {
+  background-image: url("../assets/background_Home_Page.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  max-width: 600px; /* Adjust the value as needed */
+  margin: 0 auto;
 }
 </style>

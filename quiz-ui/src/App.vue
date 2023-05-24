@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div>
+  <div class="app-container">
     <header>
       <div class="header-content">
         <img alt="Vue logo" class="logo" src="@/assets/Logo_One_piece.svg" width="250" height="90" />
@@ -15,7 +15,7 @@ import { RouterLink, RouterView } from 'vue-router'
       </div>
     </header>
 
-    <main>
+    <main class="app-main">
       <router-view />
     </main>
   </div>
@@ -85,8 +85,19 @@ nav a.router-link-exact-active {
     margin-top: 1rem;
   }
 
-  main {
-    flex-grow: 6rem;
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center; /* Added */
+    justify-content: center; /* Added */
+  }
+
+  main.app-main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
