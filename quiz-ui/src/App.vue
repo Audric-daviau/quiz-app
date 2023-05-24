@@ -9,8 +9,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <img alt="Vue logo" class="logo" src="@/assets/Logo_One_piece.svg" width="250" height="90" />
 
         <nav>
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/admin">Admin</RouterLink>
+          <RouterLink class="nav-link" to="/">Home</RouterLink>
+          <RouterLink class="nav-link" to="/admin">Admin</RouterLink>
         </nav>
       </div>
     </header>
@@ -30,6 +30,7 @@ header {
   line-height: 1.5;
   padding: 1rem;
   z-index: 1;
+  background-color: rgba(255, 255, 255, 0); /* Set the desired background color */
 }
 
 .header-content {
@@ -46,16 +47,17 @@ nav {
   display: flex;
 }
 
-nav a {
+nav .nav-link {
   display: inline-block;
   padding: 0.5rem 1rem;
-  color: #333;
+  color: white; /* Set the text color to white */
+  background-color: #b14249; /* Set the desired background color */
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 nav a.router-link-exact-active {
-  background-color: #ccc;
+  background-color: #8d353a;
 }
 
 @media (min-width: 1024px) {
