@@ -280,20 +280,68 @@ def addParticipants():
         return {"status": "error", "message": str(e)}, 500
     
 
-@app.route('/participations', methods=['GET'])
+@app.route('/participations/all', methods=['GET'])
 def getScoreParticipant():
-    position = request.args.get('playerName', type = int)
+    position = request.args.get('playerName', type = str)
     params = (position,)
     conn = sqlite3.connect('bdd_quiz.db')
     cursor = conn.cursor()
     cursor.execute('SELECT score FROM Participant where pseudo = ?', params)
     score = cursor.fetchone()
+    print(params, score)
     conn.close()
     if score is None:
         return {"status": "error", "message": "Question not found"}, 404
     else :
         return {"score" : score}
 
+
+@app.route('/participations', methods=['GET'])
+def getClassParticipant():
+    conn = sqlite3.connect('bdd_quiz.db')
+    cursor = conn.cursor()
+    cursor.execute("""SELECT pseudo, score FROM Participant ORDER BY score DESC LIMIT 3""")
+    rows = cursor.fetchall()
+    print(rows)
+    scores = []
+    for row in rows:
+        score_dict = {"playerName": row[0], "score": row[1]}
+        scores.append(score_dict)
+    conn.close()
+    if len(rows) == 0:
+        return {"status": "error", "message": "No participants found"}, 404
+    else :
+        return {"scores" : scores}
+
+@app.route('/participations/classement', methods=['GET'])
+def getParticipantClass():
+    try:
+        position = request.args.get('playerName', type = str)
+        conn = sqlite3.connect('bdd_quiz.db')
+        cursor = conn.cursor()
+        cursor.execute("select pseudo, score from Participant")
+        rows = cursor.fetchall()
+        scores = []
+        for row in rows:
+            score_dict = {"playerName": row[0], "score": row[1]}
+            scores.append(score_dict)
+        conn.close()
+        scores = sorted(scores, key=lambda x: x['score'], reverse=True)
+        classe = None  # Initialize classe
+        for i in range(len(scores)):
+            if scores[i]['playerName'] == position:  # Compare with string, not tuple
+                classe = i + 1  # '+1' is for starting rank from 1 instead of 0
+                break
+
+        print(classe)
+        if classe is not None:  # Check if classe is assigned
+            return {"classe": classe}, 200
+        else:
+            return {"status": "error", "message": "Player not found"}, 404
+    except Exception as e:
+        return {"status": "error", "message": str(e)}, 500
+
+    
 
 if __name__ == '__main__':
     app.run()

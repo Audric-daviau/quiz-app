@@ -70,5 +70,17 @@ export default {
       Authorization: `Bearer ${token}` 
     };
     return this.call("delete", `questions/${questionId}`, null, headers)
+  },
+
+  getScoreParticipant(playerName){
+    return this.call("get",  "participations/all", null, null, {playerName})
+  },
+
+  getClassParticipant(){
+    return this.call("get", "participations")
+  },
+
+  getParticipantClass(playerName){
+    return this.call("get",  "participations/classement", null, null, {playerName})
   }
 };
