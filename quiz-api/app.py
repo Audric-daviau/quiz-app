@@ -20,11 +20,11 @@ def getQuizInfo():
         cursor = conn.cursor()
         cursor.execute('SELECT COUNT(*) FROM Question')
         result = cursor.fetchone()
-        cursor.execute("select pseudo, score from Participant")
+        cursor.execute("select pseudo, score, date from Participant")
         rows = cursor.fetchall()
         scores = []
         for row in rows:
-            score_dict = {"playerName": row[0], "score": row[1]}
+            score_dict = {"playerName": row[0], "score": row[1], "date": row[2]}
             scores.append(score_dict)
         conn.close()
         scores = sorted(scores, key=lambda x: x['score'], reverse=True)
