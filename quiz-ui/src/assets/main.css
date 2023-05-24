@@ -1,0 +1,10 @@
+@import './base.css';
+@font-face {
+    font-family: op;
+    src: url("one_font.ttf");
+}
+
+body{
+    font-family: op;
+    background-color: hsl(150, 2%, 16%);
+}

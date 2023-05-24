@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class = form>
         <p>Score : {{ score }}</p>
         <p>Classement : {{ ranking }}</p>
         <p>Meilleurs scores :</p>
@@ -68,6 +68,8 @@ export default {
 </script>
   
 <style scoped>
-/* Styles spécifiques au composant */
+body {
+  text-align: center;
+}
 </style>
   
