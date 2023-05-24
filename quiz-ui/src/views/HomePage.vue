@@ -97,29 +97,30 @@ router-link {
 
 .player-rank {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 25px;
   margin-right: 6px;
-  color: #2b6ee9;
+  color: #142d69;
 }
 
 .player-name {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
-  padding: 3px;
+  padding: 6px;
   margin-right: 6px;
-  color: #343a40;
+  color: #000000;
 }
 
 .score {
-  color: #92373d;
-  padding: 1px;
-  font-size: 18px;
+  color: #e30c0c;
+  padding: 6px;
+  font-size: 25px;
 }
 
 .score-date {
-  padding: 3px;
-  font-size: 16px;
-  color: #6c757d;
+  padding: 8px;
+  font-size: 24px;
+  color: #1a5ccf;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
