@@ -72,7 +72,7 @@ router-link {
 .content {
   text-align: center;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(141, 53, 58, 0.4);
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
