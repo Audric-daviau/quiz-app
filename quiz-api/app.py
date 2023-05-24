@@ -6,6 +6,7 @@ import sqlite3
 import json
 import Question
 from datetime import datetime
+import savebdd
 
 app = Flask(__name__)
 CORS(app)
@@ -236,6 +237,27 @@ def deleteAllQuestions():
         return {"status": "success", "message": "Question deleted successfully"}, 204
     else :
         return {"status": "error", "message": "Question not found"}, 404
+    
+
+@app.route('/participations/all', methods=['DELETE'])
+def deleteAllParticipants():
+    token = request.headers.get('Authorization')
+    if token is None:
+        return 'Unauthorized', 401
+    # Delete the question from the database
+    conn = sqlite3.connect('bdd_quiz.db')
+    cursor = conn.cursor()
+    
+    query = '''DELETE FROM Participant'''
+    cursor.execute(query)
+    affected_rows = cursor.rowcount
+    conn.commit()
+    conn.close()
+
+    if affected_rows != 0:
+        return {"status": "success", "message": "Question deleted successfully"}, 204
+    else :
+        return {"status": "error", "message": "Question not found"}, 404
 
 
 @app.route('/participations', methods=['POST'])
@@ -341,6 +363,15 @@ def getParticipantClass():
     except Exception as e:
         return {"status": "error", "message": str(e)}, 500
 
+@app.route('/rebuild-db', methods=['POST'])
+def RebuildDb():
+    status = savebdd.verifyAuthorization(request)[1]
+    if status == 200:
+        filename = "quiz.db"
+        if not os.path.exists(filename):
+            open(filename, 'x')
+        return savebdd.initDataBase()
+    return savebdd.verifyAuthorization(request)
     
 
 if __name__ == '__main__':
