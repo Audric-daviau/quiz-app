@@ -1,29 +1,30 @@
 <template>
-    <div id="login">
-      <h2>Admin Login</h2>
-  
-      <form @submit.prevent="submitForm">
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            name="password"
-            required
-          />
-        </div>
-  
-        <div class="form-group">
-          <button type="submit">Connexion</button>
-        </div>
-  
-        <div v-if="errorMessage" class="error-message">
-          {{ errorMessage }}
-        </div>
-      </form>
-    </div>
-  </template>
+  <div id="login" class="login-container">
+
+    <form @submit.prevent="submitForm" class="login-form">
+      
+    <h2>Admin Login</h2>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          name="password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Connexion</button>
+      </div>
+
+      <div v-if="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</template>
   
   <script>
   import quizApiService from "@/services/QuizApiService";
@@ -56,13 +57,28 @@
   </script>
   
   <style scoped>
-    #login {
-      width: 300px;
-      margin: 0 auto;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+label {
+  font-size: 1.5em;
+  padding-right: 20px;
+}
+
+  .login-form {
+    text-align: left;
+  }
+  .login-form h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.login-form .form-group {
+    margin-bottom: 50px;
+}
     .error-message {
       color: red;
     }

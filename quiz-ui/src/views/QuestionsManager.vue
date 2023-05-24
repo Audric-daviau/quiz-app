@@ -1,7 +1,9 @@
 <template>
-    <div v-if="currentQuestion">
+    <div class="content">
+    <div v-if="currentQuestion" class="page">
         <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
         <QuestionDisplay :question="currentQuestion" @answer-selected="handleQuestionAnswered" />
+    </div>
     </div>
 </template>
   
@@ -87,7 +89,29 @@ export default {
     }
 };
 </script>
-  
 <style scoped>
-/* Styles spécifiques au composant QuestionsManager */
-</style>  
+.header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+h1{
+    font-size: 1.5em;
+    background-color: rgb(165, 8, 8);
+    color:white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.page { 
+  color:black;
+  font-size: 1em;
+  background: url("../assets/quizDisplay.jpg") no-repeat center center fixed; 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+</style>

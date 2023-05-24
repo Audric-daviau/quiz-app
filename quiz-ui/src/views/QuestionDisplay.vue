@@ -1,10 +1,10 @@
 <template>
-  <div class = "page">
-    <div v-if="question && question.title">
+  <div class="page">
+    <div class="content" v-if="question && question.title">
       <h2>{{ question.title }}</h2>
       <p>{{ question.text }}</p>
       <img width="400" height="400" v-if="question.image" :src="question.image" />
-      <ul v-if="question.possibleAnswers">
+      <ul class="pts" v-if="question.possibleAnswers">
         <li v-for="(option, optionIndex) in question.possibleAnswers" :key="option.id" @click="$emit('answer-selected', optionIndex)">
           {{ option.text }}
         </li>
@@ -15,9 +15,6 @@
     </div>
   </div>
 </template>
-  
-
-  
 <script>
   export default {
     name: 'QuestionDisplay',
@@ -34,25 +31,40 @@
     }
 };
 </script>
-  
 <style scoped>
-.page { 
-  background: url("../assets/quizDisplay.jpg") no-repeat center center fixed; 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
+.page {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-img {
-  display: block;
-  max-width:230px;
-  max-height:95px;
-  width: auto;
-  height: auto;
+.content {
+  text-align: center;
+}
+
+.question-details {
+  text-align: left;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+.pts {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul li {
+  font-size: 1.2em;
+  list-style: none;
+  flex: 0 0 50%; /* Each item occupies 50% of the container width */
+  padding: 10px;
+}
+
+ul li:before {
+  content: '👒';
 }
 </style>
   

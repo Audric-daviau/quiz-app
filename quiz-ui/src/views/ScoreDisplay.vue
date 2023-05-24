@@ -1,15 +1,17 @@
 <template>
+  <div class="page">
     <div class = form>
         <p>Score : {{ score }}</p>
         <p>Classement : {{ ranking }}</p>
-        <p>Meilleurs scores :</p>
+        <p>Meilleurs scores</p>
         <ul>
             <li v-for="bestScore in bestScores" :key="bestScore.playerName">
                 {{ bestScore.playerName }} - {{ bestScore.score }}
             </li>
         </ul>
+        <button @click="retour">Retour</button>
     </div>
-    <button @click="retour">Retour</button>
+  </div>
 </template>
   
 <script>
@@ -68,8 +70,39 @@ export default {
 </script>
   
 <style scoped>
-body {
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content {
   text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+.pts {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul li {
+  list-style: none;
+  flex: 0 0 50%; /* Each item occupies 50% of the container width */
+  padding: 10px;
+}
+
+ul li:before {
+  content: '👒';
 }
 </style>
   

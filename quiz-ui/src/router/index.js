@@ -6,7 +6,7 @@ import QuestionAdminDisplay from '../views/QuestionAdminDisplay.vue'
 import QuestionEdition from '../views/QuestionEdition.vue'
 import NewQuizPage from '../views/NewQuizPage.vue';
 import QuestionsManager from '../views/QuestionsManager.vue';
-import YourScorePage from '../views/YourScorePage.vue';
+import YourScorePage from '../views/ScoreDisplay.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

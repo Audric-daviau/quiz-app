@@ -1,19 +1,21 @@
 <template>
-    <div v-if="question" id="question-display">
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.text }}</p>
-      
-      <ul>
-        <li v-for="(answer, index) in question.possibleAnswers" :key="index">
-          {{ answer.text }} 
-          <span v-if="answer.isCorrect">✔️</span>
-        </li>
-      </ul>
-      
+  <div v-if="question" id="question-display" class="question-container">
+    <h2>{{ question.title }}</h2>
+    <p>{{ question.text }}</p>
+    
+    <ul class="answers-list">
+      <li v-for="(answer, index) in question.possibleAnswers" :key="index" class="answer-item">
+        {{ answer.text }} 
+        <span v-if="answer.isCorrect">✔️</span>
+      </li>
+    </ul>
+    
+    <div class="buttons">
       <button @click="editQuestion">Éditer</button>
       <button @click="deleteQuestion">Supprimer</button>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import quizApiService from "@/services/QuizApiService";
@@ -35,7 +37,6 @@
         }
       },
       editQuestion() {
-        // navigate to question editing page with question id
         this.$router.push({ name: 'QuestionEdition', params: { questionId: this.$route.params.questionId }});
       },
       async deleteQuestion() {
@@ -51,4 +52,30 @@
       this.getQuestion();
     },
   };
-  </script>  
+  </script>
+  <style scoped>
+  h2 {
+    font-size: 2em;
+  }
+  .question-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    height: 100vh;
+  }
+  
+  .answers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: end;
+    width: 50%;
+  }
+  </style>

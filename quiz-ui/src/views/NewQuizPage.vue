@@ -8,7 +8,7 @@
         <input type="text" class="form-control" id="username" v-model="username">
         <p>{{ username }}</p>
       </div>
-      <button class="btn btn-primary mt-2" @click="launchNewQuiz">Go</button>
+      <button @click="launchNewQuiz">Go</button>
     </form>
   </div>
 </template>
@@ -34,6 +34,9 @@ export default {
 </script>
   
 <style scodped>
+h1 {
+  font-size: 2.3em;
+}
 body {
     color: white;
     font-size: 2em;
@@ -50,7 +53,22 @@ form {
   background-repeat: no-repeat;
   min-height: 100vh;
   display: flex;
+  font-size: 2em;
   align-items: center;
   justify-content: center;
+}
+
+button {
+  background: transparent;
+  color: white;
+  border: none;  /* Remove default button border */
+  border-radius: 12px;  /* Make corners rounded */
+  padding: 10px 20px;  /* Add some padding */
+  transition: background-color 0.3s ease;  /* Make hover effect transition smoothly */
+  border: 2px solid black;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.2);  /* Add a dark background on hover */
 }
 </style>

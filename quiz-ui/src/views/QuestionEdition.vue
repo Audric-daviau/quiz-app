@@ -68,7 +68,7 @@ export default {
     methods: {
       async fetchQuestion() {
         const questionId = this.$route.params.questionId;
-        if (questionId) {  // Check if the questionId exists
+        if (questionId) {
       try {
         const response = await quizApiService.getQuestionById(questionId);
         this.question = response.data;
@@ -76,8 +76,6 @@ export default {
         console.error(error);
       }
     } else {
-      // If there's no questionId, the user is creating a new question.
-      // So, set a default or empty question.
       this.question = {
         position: '',
         title: '',
@@ -123,13 +121,43 @@ export default {
       this.question.image = b64String;
     }
     },
-    createImage(file) {
-      // Implement your image handling logic here
-      // For example, you can use FileReader API to read the image file
-      // and convert it to a data URL
-    },
     mounted() {
       this.fetchQuestion();
     },
 }
 </script>
+<style scoped>
+h2 {
+  font-size: 2em;
+  margin-top: 50px;
+}
+#question-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  height: 100vh; /* full viewport height */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.form-group label {
+  flex-basis: 150px; /* Ajustez la valeur en fonction de la largeur souhaitée pour les labels */
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  flex-grow: 1;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 10px; /* Espacement entre la case à cocher et l'intitulé de réponse */
+}
+</style>
+

@@ -1,12 +1,14 @@
 <template>
-    <div id="questions">
-      <h2>Questions</h2>
-      <div v-for="question in questions" :key="question.id" @click="goToQuestionDetail(question.id)">
+  <div id="questions" class="questions-container">
+    <h2>Questions</h2>
+    <div class="question-list">
+      <div class="question-item" v-for="question in questions" :key="question.id" @click="goToQuestionDetail(question.id)">
         {{ question.title }}
       </div>
-      <button @click="createQuestion">Créer une question</button>
     </div>
-  </template>
+    <button class="create-question-btn" @click="createQuestion">Créer une question</button>
+  </div>
+</template>
   
   <script>
   import quizApiService from "@/services/QuizApiService";
@@ -39,4 +41,32 @@
       this.getQuestions();
     },
   };
-  </script>  
+  </script>
+
+<style scoped>
+h2 {
+  font-size: 2.5em;
+}
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2em;
+}
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.question-item {
+  cursor: pointer;
+}
+
+.create-question-btn {
+  margin-top: 1em;
+}
+</style>
