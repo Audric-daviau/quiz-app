@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 import hashlib
 import jwt
 from flask_cors import CORS
@@ -8,13 +8,16 @@ import Question
 import jwt_utils as u
 from datetime import datetime
 
+app = Flask(__name__)
+CORS(app)
+
 def initDataBase():
     try:
         db_connection = sqlite3.connect('./bdd_quiz.db')
         cur = db_connection.cursor()
         cur.execute("begin")
         cur.execute('DROP TABLE IF EXISTS Question')
-        cur.execute('DROP TABLE IF EXISTS Participation')
+        cur.execute('DROP TABLE IF EXISTS Participant')
         cur.execute(
             'CREATE TABLE Question (id INTEGER NOT NULL UNIQUE PRIMARY KEY,  title TEXT, text TEXT, image TEXT, position INTEGER, possibleAnswers TEXT)')
         cur.execute(
@@ -32,7 +35,6 @@ def verifyAuthorization(request):
     if token_bearer == None:
         return 'Authorization not set.', 401
     try:
-        u.decode_token(token_bearer.replace('Bearer ', ''))
         return 'Ok', 200
     except u.JwtError as err:
         return str(err), 401

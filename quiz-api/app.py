@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 import hashlib
 import jwt
@@ -53,7 +54,6 @@ def login():
 
     return 'unauthorized', 401
 
-# Chemin vers le fichier de base de données SQLite
 DATABASE_PATH = 'bdd_quiz.db'
 
 @app.route('/questions', methods=['POST'])
@@ -62,7 +62,6 @@ def addQuestion():
     token = request.headers.get('Authorization')
     if token is None:
         return 'Unauthorized', 401
-    #récupèrer un l'objet json envoyé dans le body de la requète
     payload = request.get_json()
     title = payload.get('title')
     text = payload.get('text')
@@ -129,7 +128,7 @@ def getAllQuestions():
             "text": row[2],
             "image": row[3],
             "position": row[4],
-            "possibleAnswers": json.loads(row[5])  # assuming this is stored as JSON string
+            "possibleAnswers": json.loads(row[5])
         }
         questions.append(question)
 
@@ -200,7 +199,6 @@ def deleteQuestionById(questionId):
     token = request.headers.get('Authorization')
     if token is None:
         return 'Unauthorized', 401
-    # Delete the question from the database
     conn = sqlite3.connect('bdd_quiz.db')
     cursor = conn.cursor()
     
@@ -244,7 +242,6 @@ def deleteAllParticipants():
     token = request.headers.get('Authorization')
     if token is None:
         return 'Unauthorized', 401
-    # Delete the question from the database
     conn = sqlite3.connect('bdd_quiz.db')
     cursor = conn.cursor()
     
@@ -278,7 +275,7 @@ def addParticipants():
         i = 0
         score = 0
         for row in rows:
-            possible_answers = json.loads(row[0])  # Convert the JSON string to a Python list
+            possible_answers = json.loads(row[0])
             if possible_answers[answers[i]-1]["isCorrect"] is True:
                 score += 1
             i += 1
@@ -288,7 +285,6 @@ def addParticipants():
         INSERT INTO Participant (pseudo, answers, score, date)
         VALUES (?, ?, ?, ?)
         """
-        # Créer un tuple contenant les valeurs à insérer
         now = datetime.now()
         date_time_string = now.strftime("%Y-%m-%d %H:%M:%S")
         values = (playerName, answers_str, score, date_time_string)
@@ -349,14 +345,14 @@ def getParticipantClass():
             scores.append(score_dict)
         conn.close()
         scores = sorted(scores, key=lambda x: x['score'], reverse=True)
-        classe = None  # Initialize classe
+        classe = None
         for i in range(len(scores)):
-            if scores[i]['playerName'] == position:  # Compare with string, not tuple
-                classe = i + 1  # '+1' is for starting rank from 1 instead of 0
+            if scores[i]['playerName'] == position:
+                classe = i + 1
                 break
 
         print(classe)
-        if classe is not None:  # Check if classe is assigned
+        if classe is not None:
             return {"classe": classe}, 200
         else:
             return {"status": "error", "message": "Player not found"}, 404
@@ -367,7 +363,7 @@ def getParticipantClass():
 def RebuildDb():
     status = savebdd.verifyAuthorization(request)[1]
     if status == 200:
-        filename = "quiz.db"
+        filename = "bdd_quiz.db"
         if not os.path.exists(filename):
             open(filename, 'x')
         return savebdd.initDataBase()
