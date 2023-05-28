@@ -38,12 +38,8 @@ export default {
     try {
       // Call the service to retrieve the scores
       const scores = await quizApiService.getQuizInfo();
-      if (scores === undefined){
-        this.registeredScores = scores; // Store the scores in registeredScores
-      }else{
-        this.registeredScores = {};
-      }
-      
+      this.registeredScores = scores; // Store the scores in registeredScores
+            
       console.log(this.registeredScores);
     } catch (error) {
       console.error("Error retrieving scores:", error);
